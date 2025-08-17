@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
         juice:
-          image: juice-shop/juice-shop
+          image: bkimminich/juice-shop
           ports:
             - 3000:3000
     steps:
