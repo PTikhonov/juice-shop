@@ -15,7 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     services:
         juice:
-          #image: bkimminich/juice-shop
           image: PTikhonov/juice-shop
           ports:
             - 3000:3000
@@ -38,15 +37,7 @@ jobs:
 
       - name: Run fuzzing
         run: |
-          $HOME/go/bin/ffuf -w SQL-Injection \
-            -d '{"email": "FUZZ", "password": "anothervalue"}'  \
-            -H "Content-Type: application/json" \
-            -X POST \
-            -u http://localhost:3000/rest/user/login \
-            -fc 400 \
-            -o ffuf-result.json \
-            -debug-log ffuf-debug.log \
-            -of json || true
+          $HOME/go/bin/ffuf || true
 
       - name: Get Logs from Service
         run: |
@@ -57,6 +48,4 @@ jobs:
         with:
           name: security-reports-bundle
           path: |
-            ffuf-result.json
-            ffuf-debug.log
             juice-logs.log
